@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    background: #111;
+    overflow: hidden;
+    height: 100vh;
+    perspective: 900px;
+}
+
+.scene {
+    position: relative;
+    height: 100%;
+    transform-style: preserve-3d;
+    width: 80% !important;
+}
+
+.letter {
+    position: absolute;
+    color: #0ff;
+    font-family: monospace;
+    font-weight: lighter;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0;
+    transform-style: preserve-3d;
+    animation-name: drop;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes drop {
+    0% {
+        transform: translateY(-50px) translateZ(var(--z)) rotateY(0deg);
+        opacity: 0.5;
+    }
+
+    20% {
+        opacity: 1.2;
+    }
+
+    100% {
+        transform: translateY(100vh) translateZ(var(--z)) rotateY(0deg);
+        opacity: 1.2;
+    }
+}
