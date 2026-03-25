@@ -195,9 +195,7 @@
             }
         }
 
-        #section-2 {
-            display: none;
-        }
+
 
 
 
@@ -232,7 +230,11 @@
             opacity: 0;
             pointer-events: none;
         }
+
+        /* container */
     </style>
+
+
 </head>
 
 <body>
@@ -242,9 +244,16 @@
     </div>
 
     <div id="section-2" class="section hidden">
-        <h1 style="color:white; text-align:center; margin-top:40vh;">
-            🎉 Welcome to your surprise 🎉
-        </h1>
+        <div class="letters">
+            <div class="letter" data-content="Chúc bạn luôn vui vẻ và hạnh phúc 💖">💌</div>
+            <div class="letter" data-content="Mong mọi điều tốt đẹp sẽ đến với bạn 🎉">💌</div>
+            <div class="letter" data-content="Happy Birthday! Stay awesome 😎">💌</div>
+            <div class="letter" data-content="Tuổi mới thật nhiều thành công nhé 🚀">💌</div>
+        </div>
+
+        <div id="letter-modal">
+            <div class="letter-content"></div>
+        </div>
     </div>
     <div class="number" id="number">10</div>
 
@@ -264,6 +273,8 @@
 
         const container = document.getElementById('columns');
         let columns = [];
+
+
 
 
         function showHeart() {
@@ -424,8 +435,10 @@
         }
 
 
-        // ===== RESPONSIVE REALTIME (KHÔNG RELOAD) =====
         window.addEventListener("resize", createColumns);
+
+
+       
     </script>
 
 </body>
