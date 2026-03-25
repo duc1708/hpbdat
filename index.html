@@ -34,9 +34,12 @@
         /* ===== TEXT ===== */
         .char {
             font-size: clamp(10px, 1.5vw, 14px);
-            color: rgb(235, 6, 6);
             opacity: 0;
             animation: drop 1s linear forwards;
+            text-shadow:
+                0 0 5px red,
+                0 0 10px orange,
+                0 0 20px yellow;
         }
 
         @keyframes drop {
@@ -248,7 +251,16 @@
     <script>
         // ===== CONFIG =====
         const word = ["H", "A", "P", "P", "Y", "B", "I", "R", "T", "H", "D", "A", "Y"];
-        const colors = ["#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#00ffff", "#0000ff", "#8b00ff"];
+        const colors = [
+            "#ff0000",
+            "#ff7f00",
+            "#ffff00",
+            "#00ff00",
+            "#00ffff",
+            "#0000ff",
+            "#8b00ff"
+        ];
+
 
         const container = document.getElementById('columns');
         let columns = [];
@@ -331,6 +343,10 @@
             const span = document.createElement('span');
             span.classList.add('char');
             span.textContent = c.letter;
+
+            // random màu
+            span.style.color = colors[Math.floor(Math.random() * colors.length)];
+
             c.column.appendChild(span);
 
             setTimeout(() => span.remove(), 1000);
@@ -367,6 +383,7 @@
                 setTimeout(() => dot.remove(), 1000);
             }
         }
+
         let rainInterval = setInterval(() => {
             columns.forEach(createLetter);
         }, 10000);
@@ -388,9 +405,6 @@
             }
         }
         countdown();
-
-
-        // ===== HEART =====
 
 
         // ===== ROCKET FIREWORK =====
