@@ -201,7 +201,8 @@
 
         /* zoom trái tim */
         .zoom-heart {
-            animation: zoomHeart 0.8s forwards;
+            animation: zoomHeart 1.5s ease forwards;
+            /* chậm hơn */
         }
 
         @keyframes zoomHeart {
@@ -211,7 +212,7 @@
             }
 
             100% {
-                transform: translate(-50%, -50%) scale(20);
+                transform: translate(-50%, -50%) scale(25);
                 opacity: 0;
             }
         }
@@ -252,6 +253,7 @@
         const container = document.getElementById('columns');
         let columns = [];
 
+
         function showHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -260,16 +262,27 @@
 
             document.body.appendChild(heart);
 
-            // hiện text
-            setTimeout(() => {
-                const msg = document.createElement('div');
-                msg.classList.add('message');
-                msg.innerHTML = "Happy Birthday 🎉";
-                document.body.appendChild(msg);
-            }, 1000);
+            // tạo text
+            const msg = document.createElement('div');
+            msg.classList.add('message');
+            msg.innerHTML = "Happy Birthday 🎉";
+            document.body.appendChild(msg);
 
-            // CLICK → cinematic transition
+            // CLICK
             heart.addEventListener("click", () => {
+
+                // 💥 STOP EVERYTHING
+                clearInterval(rainInterval);
+                clearInterval(fireworkInterval);
+
+                // ❌ xóa chữ rơi
+                document.getElementById("columns").innerHTML = "";
+
+                // ❌ xóa tất cả pháo hoa
+                document.querySelectorAll(".firework, .rocket").forEach(el => el.remove());
+
+                // ❌ xóa text
+                msg.remove();
 
                 // zoom heart
                 heart.classList.add("zoom-heart");
@@ -277,10 +290,13 @@
                 // fade section 1
                 document.getElementById("section-1").classList.add("hidden");
 
-                // delay xong mới show section 2
+                // chuyển scene
                 setTimeout(() => {
                     document.getElementById("section-2").classList.remove("hidden");
-                }, 600);
+
+                    // ❌ xóa luôn heart sau khi chuyển
+                    heart.remove();
+                }, 1200);
             });
         }
 
@@ -351,9 +367,13 @@
                 setTimeout(() => dot.remove(), 1000);
             }
         }
-
+        let rainInterval = setInterval(() => {
+            columns.forEach(createLetter);
+        }, 10000);
 
         // ===== COUNTDOWN =====
+        let fireworkInterval;
+
         function countdown() {
             if (count > 0) {
                 numberEl.textContent = count;
@@ -363,10 +383,10 @@
             } else {
                 numberEl.textContent = "";
                 showHeart();
-                setInterval(shootFirework, 250);
+
+                fireworkInterval = setInterval(shootFirework, 250);
             }
         }
-
         countdown();
 
 
