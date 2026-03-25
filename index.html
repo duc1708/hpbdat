@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday + Countdown Fireworks</title>
+
     <style>
         body {
             margin: 0;
@@ -12,24 +13,35 @@
             overflow: hidden;
             height: 100vh;
             font-family: monospace;
-            color: rgb(235, 6, 6);
         }
 
+        /* ===== CONTAINER ===== */
+        #columns {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== COLUMN ===== */
         .column {
             position: absolute;
             display: flex;
             flex-direction: column;
             gap: 2px;
-            top: 0px;
+            top: 0;
         }
 
+        /* ===== TEXT ===== */
         .char {
-            font-size: clamp(10px, 1.5vw, 13px);
+            font-size: clamp(10px, 1.5vw, 14px);
+            color: rgb(235, 6, 6);
+            opacity: 0;
+            animation: drop 1s linear forwards;
         }
 
         @keyframes drop {
             0% {
-                transform: translateY(-100px);
+                transform: translateY(-50px);
                 opacity: 0;
             }
 
@@ -43,38 +55,25 @@
             }
         }
 
+        /* ===== NUMBER ===== */
         .number {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 100px;
+            font-size: clamp(60px, 10vw, 120px);
             font-weight: bold;
             z-index: 10;
 
-            /* gradient 7 màu */
-            background: linear-gradient(90deg,
-                    red,
-                    orange,
-                    yellow,
-                    green,
-                    cyan,
-                    blue,
-                    violet);
-
+            background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
 
-            /* glow */
-            text-shadow:
-                0 0 10px red,
-                0 0 20px orange,
-                0 0 30px yellow;
+            text-shadow: 0 0 10px red, 0 0 20px orange;
 
             animation: pulse 0.8s infinite;
         }
 
-        /* nhịp đập */
         @keyframes pulse {
 
             0%,
@@ -87,16 +86,14 @@
             }
         }
 
+        /* ===== FIREWORK ===== */
         .firework {
             position: absolute;
             width: 6px;
-            /* to hơn */
             height: 6px;
             border-radius: 50%;
             opacity: 0.9;
-
             box-shadow: 0 0 8px currentColor, 0 0 15px currentColor;
-
             animation: explode 1s ease-out forwards;
         }
 
@@ -112,60 +109,13 @@
             }
         }
 
-        .dot {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            opacity: 0.9;
-
-            background: linear-gradient(45deg,
-                    red,
-                    orange,
-                    yellow,
-                    green,
-                    cyan,
-                    blue,
-                    violet);
-
-            animation: sparkle 0.8s infinite;
-        }
-
-        /* lấp lánh */
-        @keyframes sparkle {
-
-            0%,
-            100% {
-                opacity: 0.3;
-                transform: scale(0.8);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.4);
-            }
-        }
-
-        /* nổ pháo */
-        @keyframes explode {
-            0% {
-                transform: translate(0, 0);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translate(var(--x), var(--y));
-                opacity: 0;
-            }
-        }
-
-        /* ===== TRÁI TIM ===== */
+        /* ===== HEART ===== */
         .heart {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            font-size: 120px;
+            font-size: clamp(80px, 12vw, 140px);
             z-index: 20;
 
             background: linear-gradient(45deg, red, pink, violet);
@@ -187,26 +137,23 @@
             }
         }
 
-        /* ===== PHÁO HOA BẮN TỪ DƯỚI ===== */
+        /* ===== ROCKET ===== */
         .rocket {
             position: absolute;
             width: 4px;
-            height: 10px;
+            height: 12px;
             background: white;
             bottom: 0;
-            opacity: 1;
             animation: shoot 0.8s linear forwards;
         }
 
         @keyframes shoot {
             0% {
                 transform: translateY(0);
-                opacity: 1;
             }
 
             100% {
                 transform: translateY(-80vh);
-                opacity: 1;
             }
         }
     </style>
@@ -214,85 +161,78 @@
 
 <body>
 
+    <div id="columns"></div>
     <div class="number" id="number">10</div>
 
     <script>
-        // --- chữ rơi HAPPY BIRTHDAY ---
+        // ===== CONFIG =====
         const word = ["H", "A", "P", "P", "Y", "B", "I", "R", "T", "H", "D", "A", "Y"];
-        const columnSpacing = window.innerWidth < 768 ? 18 : 28;
-        const totalWidth = totalColumns * columnSpacing;
-        const startX = (window.innerWidth - totalWidth) / 2;
-        window.addEventListener("resize", () => location.reload());
-        // 🌈 bảng màu 7 sắc
-        const colors = [
-            "#ff0000",
-            "#ff7f00",
-            "#ffff00",
-            "#00ff00",
-            "#00ffff",
-            "#0000ff",
-            "#8b00ff"
-        ];
+        const colors = ["#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#00ffff", "#0000ff", "#8b00ff"];
 
-        // tạo cột full màn hình
-        const totalColumns = Math.floor(screenWidth / columnSpacing);
-        const columns = [];
+        const container = document.getElementById('columns');
+        let columns = [];
 
-        for (let i = 0; i < totalColumns; i++) {
-            const column = document.createElement('div');
-            column.classList.add('column');
-            column.style.left = (startX + i * columnSpacing) + 'px';
-            document.body.appendChild(column);
+        // ===== CREATE COLUMNS (FIX FULL WIDTH) =====
+        function createColumns() {
+            container.innerHTML = "";
+            columns = [];
 
-            const letter = word[i % word.length];
-            columns.push({ column, letter });
+            const spacing = window.innerWidth < 768 ? 18 : 28;
+            const total = Math.floor(window.innerWidth / spacing);
+
+            const totalWidth = total * spacing;
+            const startX = (window.innerWidth - totalWidth) / 2;
+
+            for (let i = 0; i < total; i++) {
+                const col = document.createElement('div');
+                col.classList.add('column');
+                col.style.left = (startX + i * spacing) + 'px';
+
+                const letter = word[i % word.length];
+                container.appendChild(col);
+
+                columns.push({ column: col, letter });
+            }
         }
 
-        function createLetter(columnObj) {
+        createColumns();
+
+        // ===== FALLING TEXT =====
+        function createLetter(c) {
             const span = document.createElement('span');
             span.classList.add('char');
-            span.textContent = columnObj.letter;
-            columnObj.column.appendChild(span);
+            span.textContent = c.letter;
+            c.column.appendChild(span);
 
             setTimeout(() => span.remove(), 1000);
         }
 
-        // chạy chữ rơi
         setInterval(() => {
-            columns.forEach(c => createLetter(c));
+            columns.forEach(createLetter);
         }, 100);
 
 
-        // ======================
-        // 🎆 PHÁO HOA GIỮA MÀN HÌNH (7 màu + to)
-        // ======================
+        // ===== FIREWORK CENTER =====
         const numberEl = document.getElementById('number');
         let count = 10;
 
-        function createFirework() {
-            const total = 50; // 🔥 nhiều hạt hơn
-
-            for (let i = 0; i < total; i++) {
+        function createFirework(x, y) {
+            for (let i = 0; i < 50; i++) {
                 const dot = document.createElement('div');
                 dot.classList.add('firework');
 
-                const angle = Math.random() * 2 * Math.PI;
-                const radius = 80 + Math.random() * 140; // 🔥 nổ to hơn
+                const angle = Math.random() * Math.PI * 2;
+                const radius = 80 + Math.random() * 140;
 
-                const x = Math.cos(angle) * radius + 'px';
-                const y = Math.sin(angle) * radius + 'px';
+                dot.style.setProperty('--x', Math.cos(angle) * radius + 'px');
+                dot.style.setProperty('--y', Math.sin(angle) * radius + 'px');
 
-                dot.style.setProperty('--x', x);
-                dot.style.setProperty('--y', y);
-
-                // 🌈 random màu
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 dot.style.background = color;
                 dot.style.color = color;
 
-                // vị trí trung tâm
-                dot.style.left = window.innerWidth / 2 + 'px';
-                dot.style.top = window.innerHeight / 2 + 'px';
+                dot.style.left = x + 'px';
+                dot.style.top = y + 'px';
 
                 document.body.appendChild(dot);
                 setTimeout(() => dot.remove(), 1000);
@@ -300,32 +240,24 @@
         }
 
 
-        // ======================
-        // ⏱ COUNTDOWN
-        // ======================
+        // ===== COUNTDOWN =====
         function countdown() {
             if (count > 0) {
                 numberEl.textContent = count;
-                createFirework();
+                createFirework(window.innerWidth / 2, window.innerHeight / 2);
                 count--;
                 setTimeout(countdown, 1000);
             } else {
                 numberEl.textContent = "";
-
                 showHeart();
-
-                setInterval(() => {
-                    shootFirework();
-                }, 250); // 🔥 bắn nhanh hơn
+                setInterval(shootFirework, 250);
             }
         }
 
         countdown();
 
 
-        // ======================
-        // ❤️ TRÁI TIM
-        // ======================
+        // ===== HEART =====
         function showHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -334,46 +266,25 @@
         }
 
 
-        // ======================
-        // 🚀 PHÁO HOA BẮN TỪ DƯỚI (7 màu + to)
-        // ======================
+        // ===== ROCKET FIREWORK =====
         function shootFirework() {
+            const x = Math.random() * window.innerWidth;
+
             const rocket = document.createElement('div');
             rocket.classList.add('rocket');
-
-            const x = Math.random() * window.innerWidth;
             rocket.style.left = x + 'px';
 
             document.body.appendChild(rocket);
 
             setTimeout(() => {
                 rocket.remove();
-
-                // 💥 nổ
-                for (let i = 0; i < 60; i++) { // 🔥 nhiều hạt hơn
-                    const dot = document.createElement('div');
-                    dot.classList.add('firework');
-
-                    const angle = Math.random() * 2 * Math.PI;
-                    const radius = 80 + Math.random() * 140; // 🔥 to hơn
-
-                    dot.style.setProperty('--x', Math.cos(angle) * radius + 'px');
-                    dot.style.setProperty('--y', Math.sin(angle) * radius + 'px');
-
-                    // 🌈 random màu
-                    const color = colors[Math.floor(Math.random() * colors.length)];
-                    dot.style.background = color;
-                    dot.style.color = color;
-
-                    dot.style.left = x + 'px';
-                    dot.style.top = window.innerHeight * 0.2 + 'px';
-
-                    document.body.appendChild(dot);
-                    setTimeout(() => dot.remove(), 1000);
-                }
-
+                createFirework(x, window.innerHeight * 0.2);
             }, 800);
         }
+
+
+        // ===== RESPONSIVE REALTIME (KHÔNG RELOAD) =====
+        window.addEventListener("resize", createColumns);
     </script>
 
 </body>
