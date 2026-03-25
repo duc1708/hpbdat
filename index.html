@@ -24,9 +24,7 @@
         }
 
         .char {
-            font-size: 13px;
-            opacity: 0;
-            animation: drop 1s linear forwards;
+            font-size: clamp(10px, 1.5vw, 13px);
         }
 
         @keyframes drop {
@@ -221,9 +219,10 @@
     <script>
         // --- chữ rơi HAPPY BIRTHDAY ---
         const word = ["H", "A", "P", "P", "Y", "B", "I", "R", "T", "H", "D", "A", "Y"];
-        const columnSpacing = 50;
-        const screenWidth = window.innerWidth;
-
+        const columnSpacing = window.innerWidth < 768 ? 18 : 28;
+        const totalWidth = totalColumns * columnSpacing;
+        const startX = (window.innerWidth - totalWidth) / 2;
+        window.addEventListener("resize", () => location.reload());
         // 🌈 bảng màu 7 sắc
         const colors = [
             "#ff0000",
@@ -242,7 +241,7 @@
         for (let i = 0; i < totalColumns; i++) {
             const column = document.createElement('div');
             column.classList.add('column');
-            column.style.left = (i * columnSpacing) + 'px';
+            column.style.left = (startX + i * columnSpacing) + 'px';
             document.body.appendChild(column);
 
             const letter = word[i % word.length];
