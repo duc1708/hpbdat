@@ -14,15 +14,15 @@
             height: 100vh;
             font-family: monospace;
         }
-
         /* ===== CONTAINER ===== */
+        
         #columns {
             position: absolute;
             width: 100%;
             height: 100%;
         }
-
         /* ===== COLUMN ===== */
+        
         .column {
             position: absolute;
             display: flex;
@@ -30,35 +30,30 @@
             gap: 2px;
             top: 0;
         }
-
         /* ===== TEXT ===== */
+        
         .char {
             font-size: clamp(10px, 1.5vw, 14px);
             opacity: 0;
             animation: drop 1s linear forwards;
-            text-shadow:
-                0 0 5px red,
-                0 0 10px orange,
-                0 0 20px yellow;
+            text-shadow: 0 0 5px red, 0 0 10px orange, 0 0 20px yellow;
         }
-
+        
         @keyframes drop {
             0% {
                 transform: translateY(-50px);
                 opacity: 0;
             }
-
             20% {
                 opacity: 1;
             }
-
             100% {
                 transform: translateY(100vh);
                 opacity: 1;
             }
         }
-
         /* ===== NUMBER ===== */
+        
         .number {
             position: absolute;
             top: 50%;
@@ -67,29 +62,24 @@
             font-size: clamp(60px, 10vw, 120px);
             font-weight: bold;
             z-index: 10;
-
             background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-
             text-shadow: 0 0 10px red, 0 0 20px orange;
-
             animation: pulse 0.8s infinite;
         }
-
+        
         @keyframes pulse {
-
             0%,
             100% {
                 transform: translate(-50%, -50%) scale(1);
             }
-
             50% {
                 transform: translate(-50%, -50%) scale(1.2);
             }
         }
-
         /* ===== FIREWORK ===== */
+        
         .firework {
             position: absolute;
             width: 6px;
@@ -99,20 +89,19 @@
             box-shadow: 0 0 8px currentColor, 0 0 15px currentColor;
             animation: explode 1s ease-out forwards;
         }
-
+        
         @keyframes explode {
             0% {
                 transform: translate(0, 0) scale(1);
                 opacity: 1;
             }
-
             100% {
                 transform: translate(var(--x), var(--y)) scale(0);
                 opacity: 0;
             }
         }
-
         /* ===== HEART ===== */
+        
         .heart {
             position: absolute;
             top: 50%;
@@ -120,19 +109,13 @@
             transform: translate(-50%, -50%) scale(0);
             font-size: clamp(120px, 18vw, 220px);
             z-index: 20;
-
             background: linear-gradient(45deg, red, pink, violet);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-
-            text-shadow:
-                0 0 20px red,
-                0 0 40px pink,
-                0 0 60px violet;
-
+            text-shadow: 0 0 20px red, 0 0 40px pink, 0 0 60px violet;
             animation: heartPop 1s forwards, pulse 1s infinite 1s;
         }
-
+        
         .message {
             position: absolute;
             top: 65%;
@@ -143,39 +126,35 @@
             text-align: center;
             opacity: 0;
             z-index: 20;
-
             background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-
             animation: fadeIn 2s forwards;
         }
-
+        
         @keyframes fadeIn {
             0% {
                 opacity: 0;
                 transform: translate(-50%, 20px);
             }
-
             100% {
                 opacity: 1;
                 transform: translate(-50%, -50%);
             }
         }
-
+        
         @keyframes heartPop {
             0% {
                 transform: translate(-50%, -50%) scale(0);
                 opacity: 0;
             }
-
             100% {
                 transform: translate(-50%, -50%) scale(1);
                 opacity: 1;
             }
         }
-
         /* ===== ROCKET ===== */
+        
         .rocket {
             position: absolute;
             width: 4px;
@@ -184,54 +163,189 @@
             bottom: 0;
             animation: shoot 0.8s linear forwards;
         }
-
+        
         @keyframes shoot {
             0% {
                 transform: translateY(0);
             }
-
             100% {
                 transform: translateY(-80vh);
             }
         }
-
-
-
-
-
-
         /* zoom trái tim */
+        
         .zoom-heart {
             animation: zoomHeart 1.5s ease forwards;
             /* chậm hơn */
         }
-
+        
         @keyframes zoomHeart {
             0% {
                 transform: translate(-50%, -50%) scale(1);
                 opacity: 1;
             }
-
             100% {
                 transform: translate(-50%, -50%) scale(25);
                 opacity: 0;
             }
         }
-
         /* fade scene */
+        
         .section {
             position: absolute;
             width: 100%;
             height: 100%;
             transition: opacity 0.6s ease;
         }
-
+        
         .hidden {
             opacity: 0;
             pointer-events: none;
         }
-
         /* container */
+        
+        .slide {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* 🔥 BOX CHÍNH */
+        
+        .glow-box {
+            position: relative;
+            width: 320px;
+            overflow: hidden;
+            border-radius: 16px;
+            padding: 20px 20px 50px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            /* glow */
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+            /* pulse animation */
+            animation: pulseGlow 2s infinite;
+        }
+        /* 💖 hiệu ứng đập đập */
+        
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 105, 180, 1);
+                transform: scale(1.03);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+                transform: scale(1);
+            }
+        }
+        
+        .slide {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* 🔥 BOX CHÍNH */
+        
+        .glow-box {
+            position: relative;
+            width: 320px;
+            overflow: hidden;
+            border-radius: 16px;
+            padding: 20px 20px 60px;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(224, 12, 12, 0.6);
+            animation: pulseGlow 2s infinite;
+        }
+        /* 💖 hiệu ứng đập */
+        
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 20px rgba(224, 12, 12, 0.6);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 105, 180, 1);
+                transform: scale(1.03);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(224, 12, 12, 0.6);
+                transform: scale(1);
+            }
+        }
+        /* ✅ FIX QUAN TRỌNG */
+        
+        .slider {
+            display: flex;
+            transition: transform 0.6s ease;
+            width: 100%
+        }
+        
+        .item {
+            min-width: 100%;
+            text-align: center;
+            color: #333;
+            position: relative;
+            padding-bottom: 40px;
+            width: 100%;
+            flex-shrink: 0;
+            /* QUAN TRỌNG */
+        }
+        
+        .item .next-btn {
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+        }
+        /* button */
+        
+        .next-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            padding: 8px 14px;
+            border: none;
+            background: hotpink;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .next-btn:hover {
+            background: deeppink;
+        }
+        
+        .typing::after {
+            content: attr(data-dots);
+            margin-left: 5px;
+        }
+        
+        @keyframes blinkDots {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        #section-2,
+        #section-3 {
+            transition: opacity 0.6s ease;
+        }
+        
+        .typing {
+            max-height: 200px;
+            overflow-y: auto;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
     </style>
 
 
@@ -244,20 +358,80 @@
     </div>
 
     <div id="section-2" class="section hidden">
-        <div class="letters">
-            <div class="letter" data-content="Chúc bạn luôn vui vẻ và hạnh phúc 💖">💌</div>
-            <div class="letter" data-content="Mong mọi điều tốt đẹp sẽ đến với bạn 🎉">💌</div>
-            <div class="letter" data-content="Happy Birthday! Stay awesome 😎">💌</div>
-            <div class="letter" data-content="Tuổi mới thật nhiều thành công nhé 🚀">💌</div>
-        </div>
+        <div class="slide">
+            <div class="glow-box">
 
-        <div id="letter-modal">
-            <div class="letter-content"></div>
+                <div class="slider">
+
+                    <div class="item">
+                        <h4>Tadaaaa lá thư đầu tiên ... 💌</h4>
+                        <p class="typing" data-text="Chúc mừng sinh nhật em bé của anh nha, hôm nay là sinh nhật thứ 18 của em, một độ tuổi đẹp nhất của emm,
+                        đây là lời chúc tận đáy lòng của tmd nò, anh chúc em hiện tại và cả tương lai luôn vui vẻ không được buồn nữa,
+                        xinh thì càng ngày càng xinh xắn hơn, cố gắng trong thời gian tới phấn đấu đạt được mục tiêu nè, cố gắng đậu vào nguyện vọng 1 tmd sẽ mãi bên em
+                        "></p>
+
+                        <button class="next-btn">→</button>
+                    </div>
+
+                    <div class="item">
+                        <h4> Tâm sự chút nhaa 💖</h4>
+                        <p class="typing" data-text="Anh chưa bao giờ dám nghĩ anh có thể được 
+                        bên em như hôm nay, anh thật sự trân trọng nó lắm, 
+                        trãi qua bao nhiêu chuyện với em anh luôn thương em, ngày càng nhiều, tmd không cho phép em
+                        suy nghĩ là anh hết yêu em, vì anh luôn thương em
+                        hnay sinh nhật em cùng nhau thổi nến và ước rằng sẽ bên nhau, hiểu nhau
+                        dù có chuyện gì xảy ra đi chăng nữa hãy nhớ những cố gắng vì nhauu mà nhẹ lòng bỏ qua
+                        anhh hứa sẽ bên em mãiiiiiiii
+                        "></p>
+
+                        <button class="next-btn">→ 💕</button>
+                    </div>
+
+                    <div class="item">
+                        <h4>Lời nhắc 💘</h4>
+                        <p class="typing" data-text="Hứa với anhh khi ở bên anh không được buồn, không được khóc nhè, không 
+                        phải anh không thể dỗ dành em khi em buồn khi em khóc, nhưng mà anh không muốn nhìn thấy em khóc như vậy vì 
+                        anh đã bên em rồi anh ở đây với em rồi nên là sao nhò nên là không được buồn, suy nghĩ anh chưa bao giờ hết yêu em cả
+                        cũng không có 1 thứ gì chen chân vào, từ suy nghĩ đến hành động anh chỉ hướng về emm
+                        Em muốn biết vì sao anh yêu em không? Vì em là em, vì em là duy nhất, vì em là 
+                        người con gái mà anh yêu thương nhất trên đời này, vì em là người đã khiến anh trở nên tốt hơn, 
+                        vì em là người đã khiến anh biết thế nào là yêu thương, 
+                        vì em là 
+                        người đã khiến anh biết thế nào là hạnh phúc, vì em là người đã khiến 
+                        anh biết thế nào là đau khổ, vì em là người đã khiến anh biết thế nào là nhớ nhung,
+                         vì em là người đã khiến anh biết thế nào là lo lắng, 
+                         vì em là người đã khiến anh biết thế nào là ghen tuông, 
+                         vì em là người đã khiến anh biết thế nào là hy vọng, 
+                         vì em là người đã khiến anh biết thế nào là tin tưởng, 
+                         vì em là người đã khiến anh biết thế nào là chờ đợi..
+                         Vậy em có yêu anh không .... 
+                         
+                         "></p>
+
+                        <a href="http://127.0.0.1:5500/index2.html"> <button class="next-btn"> Dạ có 💘 </button> </a>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
+    </div>
+
+    <div id="section-3">
     </div>
     <div class="number" id="number">10</div>
 
     <script>
+        let section3Started = false;
+        let index = 0;
+
+        document.querySelector(".next-btn").onclick = () => {
+            const slider = document.querySelector(".slider");
+            const total = document.querySelectorAll(".item").length;
+
+            index = (index + 1) % total;
+            slider.style.transform = `translateX(-${index * 100}%)`;
+        };
         // ===== CONFIG =====
         const word = ["H", "A", "P", "P", "Y", "B", "I", "R", "T", "H", "D", "A", "Y"];
         const colors = [
@@ -288,21 +462,21 @@
             // tạo text
             const msg = document.createElement('div');
             msg.classList.add('message');
-            msg.innerHTML = "Happy Birthday 🎉";
+            msg.innerHTML = "Chúc mừng sinh nhật em bé của TMD";
             document.body.appendChild(msg);
 
             // CLICK
             heart.addEventListener("click", () => {
 
                 // 💥 STOP EVERYTHING
-                clearInterval(rainInterval);
-                clearInterval(fireworkInterval);
+                // clearInterval(rainInterval);
+                // clearInterval(fireworkInterval);
 
                 // ❌ xóa chữ rơi
-                document.getElementById("columns").innerHTML = "";
+                // document.getElementById("columns").innerHTML = "";
 
                 // ❌ xóa tất cả pháo hoa
-                document.querySelectorAll(".firework, .rocket").forEach(el => el.remove());
+                // document.querySelectorAll(".firework, .rocket").forEach(el => el.remove());
 
                 // ❌ xóa text
                 msg.remove();
@@ -343,7 +517,10 @@
                 const letter = word[i % word.length];
                 container.appendChild(col);
 
-                columns.push({ column: col, letter });
+                columns.push({
+                    column: col,
+                    letter
+                });
             }
         }
 
@@ -438,7 +615,57 @@
         window.addEventListener("resize", createColumns);
 
 
-       
+        const slider = document.querySelector(".slider");
+        const items = document.querySelectorAll(".item");
+        const total = items.length;
+
+        function runTyping(el) {
+            if (!el) return;
+
+            const text = el.getAttribute("data-text");
+            el.innerHTML = ""; // reset
+            let i = 0;
+
+            function type() {
+                if (i < text.length) {
+                    el.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                }
+            }
+
+            type();
+        }
+
+        // 👉 chạy slide đầu tiên
+        runTyping(items[0].querySelector(".typing"));
+
+        document.querySelectorAll(".next-btn").forEach(btn => {
+            btn.onclick = () => {
+
+                // 👉 nếu đang ở slide cuối
+                if (index === total - 1) {
+                    document.getElementById("section-2").style.display = "none";
+                    return;
+                }
+
+                // 👉 bình thường thì next slide
+                index++;
+                slider.style.transform = `translateX(-${index * 100}%)`;
+
+                // chạy typing slide mới
+                const currentTyping = items[index].querySelector(".typing");
+                runTyping(currentTyping);
+            };
+        });
+
+        setInterval(() => {
+            document.querySelectorAll(".typing").forEach(el => {
+                let dots = el.getAttribute("data-dots") || "";
+                dots = dots.length >= 3 ? "" : dots + ".";
+                el.setAttribute("data-dots", dots);
+            });
+        }, 500)
     </script>
 
 </body>
